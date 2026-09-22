@@ -35,7 +35,8 @@ def read_current_millis(epoch_ms: int) -> int:
         negative if ``epoch_ms`` lies in the future.
     """
     # TODO: реализуйте функцию
-    return 0
+    a = (time.time_ns() // 1000000) - epoch_ms
+    return a
 
 
 def decode_timestamp_ms(snowflake_id: int, epoch_ms: int = EPOCH_MS_DEFAULT) -> int:
