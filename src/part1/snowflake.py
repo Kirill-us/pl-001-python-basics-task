@@ -120,15 +120,15 @@ def generate_snowflake_id(
         cases an explanatory message is printed to stdout first.
     """
     # TODO: реализуйте функцию
-    a = (time.time_ns() // 1000000) - epoch_ms
     if not (0 <= node_id <= NODE_ID_MAX):
         print(f"node_id must be in [0, {NODE_ID_MAX}], got {node_id}")
         return None
     elif not (0 <= sequence_id <= SEQUENCE_ID_MAX):
         print(f"sequence_id must be in [0, {SEQUENCE_ID_MAX}], got {sequence_id}")
         return None
+    a = (time.time_ns() // 1000000) - epoch_ms
     if a > TIMESTAMP_MS_MAX:
         print("overflows")
         return None
     else:
-        return (a << 22) | (node_id << 12) | sequence_id
+        return (a << NODE_ID_BITS + SEQUENCE_ID_BITS) | (node_id << SEQUENCE_ID_BITS) | sequence_id
