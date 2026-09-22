@@ -13,16 +13,19 @@ Each packed field can be read back on its own with :func:`decode_timestamp_ms`,
 :func:`decode_node_id` and :func:`decode_sequence_id`.
 """
 
-import time  # noqa: F401
+import time
 
-from .constants import (  # noqa: F401
+from .constants import (
+    # Epoch
     EPOCH_MS_DEFAULT,
+    # Node ID
+    NODE_ID_BITS,
     NODE_ID_DEFAULT,
     NODE_ID_MAX,
+    # Sequence ID
+    SEQUENCE_ID_BITS,
     SEQUENCE_ID_MAX,
     TIMESTAMP_MS_MAX,
-    NODE_ID_BITS,
-    SEQUENCE_ID_BITS,
 )
 
 
@@ -54,7 +57,7 @@ def decode_timestamp_ms(snowflake_id: int, epoch_ms: int = EPOCH_MS_DEFAULT) -> 
         generated.
     """
     # TODO: реализуйте функцию
-    epoch_time = snowflake_id >> (SEQUENCE_ID_BITS+NODE_ID_BITS)
+    epoch_time = snowflake_id >> (SEQUENCE_ID_BITS + NODE_ID_BITS)
     return epoch_time + epoch_ms
 
 
@@ -118,10 +121,10 @@ def generate_snowflake_id(
     """
     # TODO: реализуйте функцию
     a = (time.time_ns() // 1000000) - epoch_ms
-    if not (0<=node_id<=NODE_ID_MAX):
+    if not (0 <= node_id <= NODE_ID_MAX):
         print(f"node_id must be in [0, {NODE_ID_MAX}], got {node_id}")
         return None
-    elif not(0 <= sequence_id <= SEQUENCE_ID_MAX):
+    elif not (0 <= sequence_id <= SEQUENCE_ID_MAX):
         print(f"sequence_id must be in [0, {SEQUENCE_ID_MAX}], got {sequence_id}")
         return None
     if a > TIMESTAMP_MS_MAX:
