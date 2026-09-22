@@ -21,6 +21,8 @@ from .constants import (  # noqa: F401
     NODE_ID_MAX,
     SEQUENCE_ID_MAX,
     TIMESTAMP_MS_MAX,
+    NODE_ID_BITS,
+    SEQUENCE_ID_BITS,
 )
 
 
@@ -52,7 +54,8 @@ def decode_timestamp_ms(snowflake_id: int, epoch_ms: int = EPOCH_MS_DEFAULT) -> 
         generated.
     """
     # TODO: реализуйте функцию
-    return 0
+    epoch_time = snowflake_id >> (SEQUENCE_ID_BITS+NODE_ID_BITS)
+    return epoch_time + epoch_ms
 
 
 def decode_node_id(snowflake_id: int) -> int:
@@ -66,7 +69,8 @@ def decode_node_id(snowflake_id: int) -> int:
         ``[0, NODE_ID_MAX]``.
     """
     # TODO: реализуйте функцию
-    return 0
+    node_num = (snowflake_id >> SEQUENCE_ID_BITS) & NODE_ID_MAX
+    return node_num
 
 
 def decode_sequence_id(snowflake_id: int) -> int:
@@ -80,7 +84,8 @@ def decode_sequence_id(snowflake_id: int) -> int:
         the range ``[0, SEQUENCE_ID_MAX]``.
     """
     # TODO: реализуйте функцию
-    return 0
+    seq_id = snowflake_id & SEQUENCE_ID_MAX
+    return seq_id
 
 
 def generate_snowflake_id(
@@ -112,4 +117,10 @@ def generate_snowflake_id(
         cases an explanatory message is printed to stdout first.
     """
     # TODO: реализуйте функцию
+    if 0<=node_id<=NODE_ID_MAX:
+        return "node_id must be in [0, NODE_ID_MAX]"
+    else if 0 <= sequence_id <= SEQUENCE_ID_MAX:
+        return "sequence_id must be in [0, SEQUENCE_ID_MAX]"
+    else:
+        
     return 0
