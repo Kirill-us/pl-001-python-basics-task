@@ -131,4 +131,4 @@ def generate_snowflake_id(
         print("overflows")
         return None
     else:
-        return (a << NODE_ID_BITS + SEQUENCE_ID_BITS) | (node_id << SEQUENCE_ID_BITS) | sequence_id
+        return (a << (NODE_ID_BITS + SEQUENCE_ID_BITS)) | (node_id << SEQUENCE_ID_BITS) | sequence_id
