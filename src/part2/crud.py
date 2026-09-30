@@ -37,7 +37,7 @@ def generate_product_id(storage: list[Product]) -> int:
     # TODO: реализуйте функцию
     if not storage:
         return PRODUCT_ID_MIN
-    return max(product(PRODUCT_ID_INDEX) for product in storage) + 1
+    return max(product[PRODUCT_ID_INDEX] for product in storage) + 1
 
 
 def create_product(
@@ -114,7 +114,14 @@ def update_product(
         left unchanged and a message is printed).
     """
     # TODO: реализуйте функцию
-    return (0, "", Decimal(0), 0)
+    name, price, qual = fields
+    for i, product in enumerate(storage):
+        if product[PRODUCT_ID_INDEX] == product_id:
+            update = (product_id, name, normalize_price(price), qual)
+            storage[i] = update
+            return update
+    print(f"no product with id {product_id}")
+    return None
 
 
 def delete_product(storage: list[Product], product_id: int) -> int | None:
@@ -131,4 +138,9 @@ def delete_product(storage: list[Product], product_id: int) -> int | None:
         a message is printed).
     """
     # TODO: реализуйте функцию
-    return 0
+    for product in storage:
+        if product[PRODUCT_ID_INDEX] == product_id:
+            storage.remove(product)
+            return product_id
+    print(f"no product with id {product_id}")
+    return None
