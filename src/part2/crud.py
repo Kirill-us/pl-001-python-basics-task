@@ -14,13 +14,13 @@ is already taken.
 
 from decimal import Decimal
 
-from .storage import (  # noqa: F401
+from .storage import (
     NAME_INDEX,
     PRODUCT_ID_INDEX,
     PRODUCT_ID_MIN,
     Product,
 )
-from .utils import normalize_price  # noqa: F401
+from .utils import normalize_price
 
 
 def generate_product_id(storage: list[Product]) -> int:
@@ -59,7 +59,7 @@ def create_product(
         name is printed.
     """
     # TODO: реализуйте функцию
-    
+
     name, price, quan = fields
     n_id = generate_product_id(storage)
 
@@ -69,6 +69,7 @@ def create_product(
 
     storage.append((n_id, name, normalize_price(price), quan))
     return n_id
+
 
 def read_product(storage: list[Product], product_id: int) -> Product | None:
     """Return the product stored under ``product_id``.
